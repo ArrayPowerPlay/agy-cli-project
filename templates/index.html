@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BigQuery Release Notes Radar</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header Bar -->
+        <header class="app-header">
+            <div class="header-left">
+                <div class="logo-box">
+                    <i class="fa-solid fa-database logo-icon"></i>
+                </div>
+                <div>
+                    <h1 class="app-title">BigQuery Release Notes</h1>
+                    <p class="app-subtitle">Live product updates, features & announcements from Google Cloud</p>
+                </div>
+            </div>
+            
+            <div class="header-actions">
+                <button id="refreshBtn" class="btn btn-primary" title="Refresh Feed">
+                    <i id="refreshIcon" class="fa-solid fa-arrows-rotate"></i>
+                    <span>Refresh Feed</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Control Bar (Filter, Search, Count) -->
+        <section class="controls-section">
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" id="searchInput" placeholder="Search update notes, SQL functions, integrations..." autocomplete="off">
+            </div>
+            
+            <div class="category-filters" id="categoryFilters">
+                <button class="filter-chip active" data-category="all">All Updates</button>
+                <!-- Categories populated dynamically -->
+            </div>
+
+            <div class="stats-badge">
+                <span id="notesCount">0</span> updates loaded
+            </div>
+        </section>
+
+        <!-- Content Feed -->
+        <main class="feed-container">
+            <!-- Loading State Spinner -->
+            <div id="loadingState" class="state-box">
+                <div class="spinner-large"></div>
+                <p class="loading-text">Fetching latest release notes from Google Cloud...</p>
+            </div>
+
+            <!-- Error State -->
+            <div id="errorState" class="state-box hidden">
+                <i class="fa-solid fa-triangle-exclamation error-icon"></i>
+                <h3>Failed to fetch release feed</h3>
+                <p id="errorMessage">Unable to connect to Google Cloud RSS feed.</p>
+                <button id="retryBtn" class="btn btn-secondary mt-3">Try Again</button>
+            </div>
+
+            <!-- Empty Filter State -->
+            <div id="emptyState" class="state-box hidden">
+                <i class="fa-solid fa-filter-circle-xmark empty-icon"></i>
+                <h3>No updates match your search</h3>
+                <p>Try resetting filters or searching for another keyword.</p>
+            </div>
+
+            <!-- Release Notes List -->
+            <div id="notesList" class="notes-grid hidden"></div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>Source feed: <a href="https://docs.cloud.google.com/feeds/bigquery-release-notes.xml" target="_blank" rel="noopener">docs.cloud.google.com/feeds/bigquery-release-notes.xml</a></p>
+        </footer>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
